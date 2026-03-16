@@ -4,14 +4,20 @@
 
 ## Overview<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/5d9e7c40-4e3d-4645-8c83-6e9b8edcc042" />
 
-An end-to-end Python application designed for the processing, analysis, and visualization of neuroimaging data. This tool integrates a custom-trained 3D Fully Convolutional Network (FCN) to automatically detect and segment brain tumors from MRI scans, featuring real-time clinical geometry filtering to eliminate false positives.
+## Overview
+The **MRAI Engine** is a comprehensive medical imaging platform designed for high-precision neuroimaging analysis. It bridges the gap between raw radiological data and actionable clinical insights by integrating a custom-trained **3D Fully Convolutional Network (FCN)** for automated tumor segmentation. 
+
+Unlike standard viewers, this system performs **True-Scale Inference** on 1:1 voxel data, preserving spatial integrity for accurate **3D volumetric calculations** and **STL mesh generation**. From advanced frequency-domain signal processing (FFT) to automated clinical reporting, the MRAI Engine provides a complete end-to-end pipeline for modern digital pathology and surgical planning.
 
 ## Key Features
-* **Multi-Format Data Pipeline:** Robust parsing and physical calibration of raw DICOM series and NIfTI volumes.
-* **True-Scale AI Inference:** Utilizes a 3D U-Net architecture running at a 1:1 scale (no compression) for pixel-perfect segmentation.
-* **Advanced DSP & Computer Vision:** Includes a Gaussian High-Pass Filter (FFT) module and geometric/morphological filtering (Solidity & Area thresholds) for noise reduction.
-* **Interactive Orthogonal UI:** Built with Tkinter and Matplotlib, allowing synchronized navigation across Axial, Coronal, and Sagittal planes.
-* **Clinical Export & Volumetry:** Automatically generates printable 3D STL meshes of the segmented regions and outputs comprehensive clinical PDF reports.
+
+* **Deep Learning Tumor Detection & Contouring:** Integrates a custom 3D U-Net architecture (Fully Convolutional Network) to automatically detect, localize, and draw precise clinical contours around brain tumors, complete with probability scoring.
+* **Interactive Orthogonal Navigation:** Features a synchronized UI for simultaneous viewing of Axial, Coronal, and Sagittal planes. Includes real-time slicing, spatial crosshairs, deep zooming, and axis rotation.
+* **3D STL Generation & True Volumetry:** Converts MRI pixel data into 3D printable STL meshes (capable of rendering both the full brain and isolated tumor masses). Calculates exact physical volume in real-world units (cm³) using DICOM/NIfTI spatial metadata.
+* **Advanced Frequency-Domain DSP:** Implements a custom Gaussian High-Pass Filter via Fast Fourier Transform (FFT) to highlight fine edges and morphological details without ringing artifacts.
+* **Real-Time Image Enhancement & Color Mapping:** Provides dynamic image sharpening tools and multiple colormap filters (e.g., Grayscale, Hot, Viridis, Inferno) to improve tissue contrast and visual diagnosis.
+* **Multi-Format Clinical Data Pipeline:** Robust parsing engine capable of handling raw DICOM series and compressed NIfTI volumes, automatically calibrating physical voxel spacing and aspect ratios.
+* **Automated Clinical PDF Reporting:** Instantly compiles current multi-planar snapshot views, AI diagnosis confidence, and volumetric calculations into a formatted, ready-to-print medical report.
 
 ## Tech Stack
 * **Deep Learning:** PyTorch
