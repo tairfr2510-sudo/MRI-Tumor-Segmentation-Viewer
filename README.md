@@ -1,4 +1,4 @@
-# MRAI-Tumor-Segmentation-and-3D-Export Engine
+# MRAI-Tumor Segmentation & 3D-Export Engine
 
 **Developer:** Tair Fridman | B.Sc. Biomedical Engineering, Technion
 
