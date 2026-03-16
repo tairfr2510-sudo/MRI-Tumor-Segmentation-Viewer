@@ -1,1 +1,19 @@
-# MRI-Tumor-Segmentation-Viewer
+# Biomed MRI Viewer & 3D Tumor Segmentation Engine
+
+**Developer:** Tair Fridman | B.Sc. Biomedical Engineering, Technion
+
+## Overview
+An end-to-end Python application designed for the processing, analysis, and visualization of neuroimaging data. This tool integrates a custom-trained 3D Fully Convolutional Network (FCN) to automatically detect and segment brain tumors from MRI scans, featuring real-time clinical geometry filtering to eliminate false positives.
+
+## Key Features
+* **Multi-Format Data Pipeline:** Robust parsing and physical calibration of raw DICOM series and NIfTI volumes.
+* **True-Scale AI Inference:** Utilizes a 3D U-Net architecture running at a 1:1 scale (no compression) for pixel-perfect segmentation.
+* **Advanced DSP & Computer Vision:** Includes a Gaussian High-Pass Filter (FFT) module and geometric/morphological filtering (Solidity & Area thresholds) for noise reduction.
+* **Interactive Orthogonal UI:** Built with Tkinter and Matplotlib, allowing synchronized navigation across Axial, Coronal, and Sagittal planes.
+* **Clinical Export & Volumetry:** Automatically generates printable 3D STL meshes of the segmented regions and outputs comprehensive clinical PDF reports.
+
+## Tech Stack
+* **Deep Learning:** PyTorch
+* **Image Processing:** Scikit-Image, SciPy, NumPy, Nilearn
+* **Medical Formats:** NiBabel, PyDICOM
+* **GUI & Visualization:** Matplotlib, Tkinter, stl-mesh
