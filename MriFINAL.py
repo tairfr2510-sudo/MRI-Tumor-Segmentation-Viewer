@@ -394,10 +394,13 @@ def draw_cross(ax, r, c, col_h, col_v):
     cross_lines[ax].extend([l1, l2])
 
 def update_ai_mask():
-    """Manages the AI prediction contour rendering safely across MPL versions."""
+    """
+    Dynamically renders the AI-generated tumor contours.
+    Slices the 3D segmentation volume in real-time based on the user's current Z-axis depth.
+    """
     global ai_contour_coll
     
-    # Aggressive cleanup 
+    # Aggressive cleanup of previous matplotlib collections to prevent memory leaks
     if ai_contour_coll is not None:
         try:
             for c in ai_contour_coll.collections: 
@@ -409,8 +412,15 @@ def update_ai_mask():
             pass
         ai_contour_coll = None
 
-    if show_ai_mask and ai_tumor_mask is not None and ax_idx == ai_peak_z:
-        ai_contour_coll = axA.contour(ai_tumor_mask, levels=[0.5], colors='#FF4081', linewidths=1.5, linestyles='dashed')
+    # Volumetric slicing and rendering
+    if show_ai_mask and ai_tumor_mask is not None:
+        # Extract the specific 2D cross-section corresponding to the current slider position
+        current_ai_slice = ai_tumor_mask[:, :, ax_idx]
+        
+        # Render the contour boundary only if tumor pixels exist in the current slice
+        if current_ai_slice.max() > 0:
+            ai_contour_coll = axA.contour(current_ai_slice, levels=[0.5], colors='#FF4081', linewidths=1.5, linestyles='dashed')
+
 
 def update_all_crosshairs():
     h, w = get_slice_dims('axial')

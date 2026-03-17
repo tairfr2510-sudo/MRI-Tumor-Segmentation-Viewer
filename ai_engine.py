@@ -178,14 +178,18 @@ def scan_full_volume(volume_data, rot_k, progress_callback=None):
         tumor_pixels = np.sum(mask_vol)
         has_tumor = True
 
-    # 6. Anchor Point and Slice Extraction for UI Navigation
+    # 6. Volumetric Extraction and Spatial Anchoring
+    # Calculate the tumor's bounding range along the Z-axis
     z_sums = mask_vol.sum(axis=(0, 1))
     best_z = int(np.argmax(z_sums))
     z_indices = np.where(z_sums > 0)[0]
     tumor_range = (int(z_indices[0]), int(z_indices[-1]))
     
-    raw_2d_mask = mask_vol[:, :, best_z]
-    ai_mask_rotated = np.rot90(raw_2d_mask, k=rot_k)
+    # Extract the peak 2D slice strictly for calculating the UI navigation anchor (center of mass)
+    raw_2d_mask = mask_vol[:, :, best_z] 
+    
+    # Rotate the full 3D binary mask to match the viewer's orientation for multi-slice rendering
+    full_mask_rotated = np.rot90(mask_vol, k=rot_k, axes=(0, 1))
     
     masked_slice = volume_data[:, :, best_z] * raw_2d_mask
     if np.any(masked_slice):
@@ -196,4 +200,6 @@ def scan_full_volume(volume_data, rot_k, progress_callback=None):
 
     if progress_callback: progress_callback(100, 100)
     print(f"AI ENGINE SUCCESS: Primary mass identified. Confidence: {confidence:.1f}%. Peak Anchor: Z={best_z}")
-    return True, confidence, tumor_range, best_z, ai_mask_rotated, (anchor_x, anchor_y)
+    
+    # Return the fully prepared 3D volume mask to the UI engine
+    return True, confidence, tumor_range, best_z, full_mask_rotated, (anchor_x, anchor_y)
