@@ -869,7 +869,7 @@ def open_dsp_window(event):
     canvas.get_tk_widget().pack(fill=tk.BOTH, expand=True)
     
     ax_slider = fig_dsp.add_axes([0.2, 0.05, 0.6, 0.05], facecolor=THEME['bg'])
-    dsp_slider = Slider(ax_slider, 'Cutoff Radius', 0.1, 0.2, valinit=init_radius)
+    dsp_slider = Slider(ax_slider, 'Cutoff Radius', 0.0, 0.5, valinit=init_radius)
     
     dsp_slider.label.set_color(THEME['fg'])
     dsp_slider.valtext.set_color(THEME['accent'])
