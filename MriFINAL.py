@@ -859,10 +859,19 @@ def open_dsp_window(event):
     ax_orig.set_title("Original Slice", color=THEME['accent'])
     ax_orig.axis('off')
     
-    init_radius = 0.15
-    filtered_slice = DSP_Engine.apply_fft_highpass(current_slice, init_radius)
-    img_fft = ax_fft.imshow(filtered_slice, cmap='gray')
-    ax_fft.set_title("FFT High-Pass Filter", color=THEME['accent'])
+    init_radius = 0.2
+    
+    # 1. Apply initial filter to get edges
+    initial_edges = DSP_Engine.apply_fft_highpass(current_slice, init_radius)
+    
+    # 2. Apply Unsharp Masking for the initial display
+    alpha = 1.5
+    initial_sharpened = current_slice + (alpha * initial_edges)
+    initial_sharpened = np.clip(initial_sharpened, 0.0, 1.0)
+    
+    # 3. Display the sharpened image instead of just the edges
+    img_fft = ax_fft.imshow(initial_sharpened, cmap='gray')
+    ax_fft.set_title("FFT Sharpened MRI", color=THEME['accent']) # Updated title!
     ax_fft.axis('off')
     
     canvas = FigureCanvasTkAgg(fig_dsp, master=dsp_win)
@@ -894,7 +903,7 @@ def open_dsp_window(event):
         # 4. Update the right window with the sharpened image
         img_fft.set_data(sharpened)
         canvas.draw_idle()
-        
+
     dsp_slider.on_changed(update_fft)
     dsp_win.dsp_slider = dsp_slider 
 
