@@ -878,20 +878,20 @@ def open_dsp_window(event):
     def update_fft(val):
         r = dsp_slider.val
         
-        # 1. מפעילים את המסנן ומקבלים רק את הקצוות (התדרים הגבוהים)
+        # 1. Apply the filter to extract only the edges (high frequencies)
         edges = DSP_Engine.apply_fft_highpass(current_slice, r)
         
-        # 2. מגדירים את "כפתור הווליום" של החידוד (אפשר לשחק עם המספר הזה)
+        # 2. Define the sharpening "volume" (alpha factor - can be adjusted)
         alpha = 1.5 
         
-        # 3. פעולת החיבור: התמונה המקורית + (הקצוות כפול הווליום)
+        # 3. Unsharp Masking: Original Image + (Alpha * Edges)
         sharpened = current_slice + (alpha * edges)
         
-        # כדי שהתצוגה לא תשתגע מערכים שחורגים מהטווח של הצבעים, "חותכים" אותם
-        # בהנחה שהתמונה שלך מנורמלת לטווח של 0 עד 1
+        # Clip values to prevent display artifacts from out-of-bounds colors
+        # Assuming the image is normalized to the [0.0, 1.0] range
         sharpened = np.clip(sharpened, 0.0, 1.0) 
         
-        # 4. מציגים את התמונה המחודדת בחלון הימני
+        # 4. Update the right window with the sharpened image
         img_fft.set_data(sharpened)
         canvas.draw_idle()
         
