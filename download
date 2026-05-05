@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+.venv/
+.vscode/
+
+# קבצים זמניים של הממשק
+temp_*.png
+
+# קבצי פלט (Output) שלא מעלים לגיט
+*.pdf
+*.stl
