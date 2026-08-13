@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+.venv/
+.vscode/
+
+# UI temp files
+temp_*.png
+
+# Generated output - not committed
+*.pdf
+*.stl

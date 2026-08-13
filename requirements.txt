@@ -7,8 +7,6 @@ matplotlib
 torch
 fpdf
 numpy-stl
-nilearn
-fastai
-ipython
-pandas
-scikit-learn
+gradio
+plotly
+pillow
