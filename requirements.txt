@@ -10,3 +10,4 @@ numpy-stl
 gradio
 plotly
 pillow
+spaces
